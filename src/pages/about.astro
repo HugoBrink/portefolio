@@ -1,8 +1,44 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+
+const pageTitle = "About Me";
+
+const identity = {
+  firstName: "Hugo",
+  lastName: "Brink",
+  country: "Portugal",
+  occupation: "Software Developer",
+  hobbies: ["sports", "gaming", "traveling", "food"],
+};
+
+const skills = [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "React",
+  "Astro",
+  "Next.js",
+  "TailwindCSS",
+  "Node.js",
+  "Express",
+  "MongoDB",
+  "PostgreSQL",
+  "Git",
+];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+
+const skillColor = "navy";
+const textCase = "uppercase";
+const fontWeight = "bold";
+
+
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title={pageTitle}>
   <nav class="text-white">
     <ul>
       <li>
@@ -16,18 +52,46 @@ import Layout from "../layouts/Layout.astro";
       </li>
     </ul>
   </nav>
-  <main>
+  <main class="flex flex-col justify-center">
     <h1 class="w-fit p-4 text-left justify-start items-start flex flex-col">
-      <span class="text-gradient">About Hugo Brink</span>
+      <span class="text-gradient">{pageTitle} Hugo Brink</span>
     </h1>
+    <p>Here are a few facts about me:</p>
+    <ul>
+      <li>My name is {identity.firstName}.</li>
+      <li>
+        I live in {identity.country} and I work as a {identity.occupation}.
+      </li>
+      {
+        identity.hobbies.length >= 2 && (
+          <li>
+            Four of my hobbies are: {identity.hobbies[0]},{" "}
+            {identity.hobbies[1]}, {identity.hobbies[2]} and{" "}
+            {identity.hobbies[3]}.
+          </li>
+        )
+      }
+    </ul>
+    <p>My skills are:</p>
+    <ul>
+      {skills.map((skill) => <li class="skill">{skill}</li>)}
+    </ul>
 
-    <p id="about-me" class="h-80">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-    </p>
+    {happy && <p>I am happy to be learning Astro!</p>}
+
+    {finished && <p>I finished this tutorial!</p>}
+
+    {
+      goal === 3 ? (
+        <p>My goal is to finish in 3 days.</p>
+      ) : (
+        <p>My goal is not 3 days.</p>
+      )
+    }
   </main>
 </Layout>
 
-<style>
+<style define:vars={{ skillColor, textCase, fontWeight }}>
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 100px;
@@ -47,6 +111,11 @@ import Layout from "../layouts/Layout.astro";
     line-height: 1;
     text-align: center;
     margin-bottom: 1em;
+  }
+  .skill {
+    color: var(--skillColor);
+    font-weight: var(--fontWeight);
+    text-transform: var(--textCase);
   }
   .text-gradient {
     background-image: var(--accent-gradient);
